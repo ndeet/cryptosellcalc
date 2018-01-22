@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta author="Andreas Tasch">
+    <title>Cryptocurrency sell calculator</title>
+    <link rel="stylesheet" href="./assets/css/shoelace.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="shortcut icon" href="./assets/images/favicon.png">
+</head>
+<body>
+
+<header class="mar-t-md mar-b-md">
+    <div class="col-12 col-md-6 container text-center">
+        <h2>Cryptocurrency Sell Calculator</h2>
+        <p class="text-secondary mar-t-sm">
+            Calculate your future earnings without ever selling all of your cryptocurrency. Play with the numbers until
+            you find a pleasing setting.
+        </p>
+    </div>
+</header>
+
+<main class="container-fluid">
+
+    <form class="settings col-12 col-md-7 col-xl-4">
+        <fieldset>
+            <legend>Settings</legend>
+
+            <div class="row">
+                <div class="col-12 col-sm-7 col-md-8">
+                    <label for="balance">Crypto funds at start</label>
+                </div>
+                <div class="col-12 col-sm-5 col-md-4">
+                    <input class="input-sm" type="text" name="balance" placeholder="Balance" value="3" required>
+                </div>
+            </div>
+
+            <div class="row mar-t-sm">
+                <div class="col-12 col-sm-7 col-md-8">
+                    <label for="coin_price">Price at first sell</label>
+                </div>
+                <div class="col-12 col-sm-5 col-md-4">
+                    <input class="input-sm" type="text" name="coin_price" placeholder="Starting coin price" value="13000" required>
+                </div>
+            </div>
+
+            <div class="row mar-t-sm">
+                <div class="col-12 col-sm-7 col-md-8">
+                    <label for="sell_percent">% of funds to sell</label>
+                </div>
+                <div class="col-12 col-sm-5 col-md-4">
+                    <input class="input-sm" type="text" name="sell_percent" placeholder="Sell percent" value="10" required>
+                </div>
+            </div>
+
+            <div class="row mar-t-sm">
+                <div class="col-12 col-sm-7 col-md-8">
+                    <label for="sell_trigger_factor">Factor to trigger a sell</label>
+                </div>
+                <div class="col-12 col-sm-5 col-md-4">
+                    <input class="input-sm" type="text" name="sell_trigger_factor" placeholder="Sell trigger factor" value="1.5" required>
+                </div>
+            </div>
+
+            <div class="row mar-t-sm">
+                <div class="col-12 col-sm-7 col-md-8">
+                    <label for="number_sells">Number of sells/results to print</label>
+                </div>
+                <div class="col-12 col-sm-5 col-md-4">
+                    <input class="input-sm" type="number" name="number_sells" placeholder="Number of sells" value="10" required>
+                </div>
+            </div>
+
+            <div class="row mar-t-md">
+                <div class="col-12 col-sm-6">
+                    <input type="submit" value="Calculate results" class="button">
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+
+    <hr/>
+
+    <div class="row infobox">
+        <div class="col-12 mar-b-sm">
+            Total earnings: <span class="text-bold" id="total-sum">0.00</span>
+        </div>
+        <div class="col-12">
+            Funds remaining: <span class="" id="total-funds">0.00</span>
+        </div>
+        <div class="col-12">
+            Earnings with remaining funds (at latest price): <span class="" id="remaining-earnings">0.00</span>
+        </div>
+    </div>
+
+    <hr/>
+
+    <table class="results-list text-right">
+        <thead>
+        <tr>
+            <th class="text-right">Sell amount</th>
+            <th class="text-right">Sell price</th>
+            <th class="text-right">Earnings</th>
+            <th class="text-right">Total</th>
+            <th class="text-right">Funds left</th>
+        </tr>
+        </thead>
+        <tbody class="results">
+        <tr>
+            <td class="text-left" colspan="5">...</td>
+        </tr>
+        </tbody>
+    </table>
+    <p class="text-secondary text-small mar-t-lg">
+        Credit for this idea to <a href="https://twitter.com/fluffypony" target="_blank">@fluffypony</a> who has
+        revealed <a href="https://youtu.be/Geiwb63nMYw?t=6m12s" target="_blank">his secret selling plan</a>:
+        "I sell 5-10 % each time the price doubles from the previous point I sold."
+    </p>
+</main>
+<script src="./assets/js/calc.js"></script>
+</body>
+</html>

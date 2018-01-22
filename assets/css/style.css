@@ -1,0 +1,26 @@
+:root {
+    --color-blue: #317fbb;
+}
+
+body {
+    border-top: solid .3rem #317fbb;
+}
+
+input, button, fieldset {
+    border-radius: 0 !important;
+}
+
+.settings label {
+    font-size: 90%;
+}
+
+.infobox {
+    background: #f2f2f2;
+    border: 1px solid #ddd;
+    margin: 0;
+    padding: 1rem;
+}
+
+.results {
+   font-family: "Lucida Console", Monaco, monospace;
+}
