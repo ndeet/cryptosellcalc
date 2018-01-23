@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta author="Andreas Tasch">
-    <title>Cryptocurrency sell calculator</title>
+    <meta name="author" content="Andreas Tasch">
+    <title>Cryptocurrency sell calculator | Bitcoin, Litecoin, Monero, etc. </title>
     <link rel="stylesheet" href="./assets/css/shoelace.css">
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="shortcut icon" href="./assets/images/favicon.png">
@@ -15,15 +15,14 @@
     <div class="col-12 col-md-6 container text-center">
         <h2>Cryptocurrency Sell Calculator</h2>
         <p class="text-secondary mar-t-sm">
-            Calculate your future earnings without ever selling all of your cryptocurrency. Play with the numbers until
-            you find a pleasing setting.
+            Calculate your future crypto wealth without ever selling all of your funds. (Unfortunately?) all cryptocurrencies and tokens beside Bitcoin, Litecoin and Monero supported.
         </p>
     </div>
 </header>
 
 <main class="container-fluid">
 
-    <form class="settings col-12 col-md-7 col-xl-4">
+    <form class="settings col-12 col-md-7 col-xl-5">
         <fieldset>
             <legend>Settings</legend>
 
@@ -113,11 +112,26 @@
         </tr>
         </tbody>
     </table>
-    <p class="text-secondary text-small mar-t-lg">
-        Credit for this idea to <a href="https://twitter.com/fluffypony" target="_blank">@fluffypony</a> who has
-        revealed <a href="https://youtu.be/Geiwb63nMYw?t=6m12s" target="_blank">his secret selling plan</a>:
-        "I sell 5-10 % each time the price doubles from the previous point I sold."
-    </p>
+    <footer class="mar-t-xl">
+        <h5>Find the service useful? Donations welcome:</h5>
+        <p class="donation-addresses text-small">
+            BTC (Segwit): 38Pc6AC7ns3hCZ3Zfzvv8X8nznE1NvbY8i<br>
+            LTC: MJcGBQy4y4zHrHeuaFQat76yz7uHH9UPT6<br>
+            XMR: 44dEevjBibM7iQLAdnMazKhqemLnxfVfP4qZMtRKSV9EjCjC8fvaAFgbfwb5LuZRvfBudk5bKEaeZN14pPhqbxunBa8BzBK<br>
+            BTC Lightning: comming soon<sup>TM</sup><br>
+            BCH: <a href="http://bcash.lol" target="_blank" rel="noopener noreferrer">bcash.lol</a>
+        </p>
+        <hr/>
+        <div class="col-12 col-lg-8 offset-lg-2">
+            <p class="inspiration text-secondary text-center text-small mar-t-xl">
+                Inspired by <a href="https://twitter.com/fluffypony" target="_blank" rel="noopener noreferrer">@fluffypony</a>,
+                who has revealed <a href="https://youtu.be/Geiwb63nMYw?t=6m12s" target="_blank" rel="noopener noreferrer">his secret selling plan</a>:
+                "I sell 5-10 % each time the price doubles from the previous point I sold." <a href="javascript:" id="fluffy-preset">Click here to load fluffy's settings above</a>
+            </p>
+            <p class="text-secondary text-center mar-t-lg">Made by <a href="https://twitter.com/ndeet">@ndeet</a>. Available on <a href="https://github.com/ndeet/cryptosellcalc">github.com/ndeet/cryptosellcalc</a>.</p>
+        </div>
+
+    </footer>
 </main>
 <script src="./assets/js/calc.js"></script>
 </body>

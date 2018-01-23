@@ -10,6 +10,10 @@ input, button, fieldset {
     border-radius: 0 !important;
 }
 
+.container-fluid {
+    max-width: 1140px;
+}
+
 .settings label {
     font-size: 90%;
 }
@@ -24,3 +28,8 @@ input, button, fieldset {
 .results {
    font-family: "Lucida Console", Monaco, monospace;
 }
+
+.donation-addresses {
+    word-wrap: break-word;
+}
+
