@@ -1,8 +1,10 @@
 "use strict";
 
 const settings = document.querySelector('.settings');
+const fluffyPreset = document.getElementById('fluffy-preset');
 const results = document.querySelector('.results');
 settings.addEventListener('submit', process);
+fluffyPreset.addEventListener('click', loadFluffyStrategy);
 
 /**
  * Handle the submit and process all input data.
@@ -140,6 +142,13 @@ function sellAmount(coin_balance: number, sell_factor: number) {
  */
 function updateTotal(total: number, sell_amount: number, coin_price: number) {
     return total + (sell_amount * coin_price);
+}
+
+function loadFluffyStrategy(e: Event) {
+    e.preventDefault();
+    (<HTMLInputElement>document.getElementsByName('sell_percent').item(0)).value = "5";
+    (<HTMLInputElement>document.getElementsByName('sell_trigger_factor').item(0)).value = "2";
+    window.scrollTo(0,0);
 }
 
 // Fiat currency formatter.

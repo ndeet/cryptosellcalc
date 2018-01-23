@@ -1,7 +1,9 @@
 "use strict";
 var settings = document.querySelector('.settings');
+var fluffyPreset = document.getElementById('fluffy-preset');
 var results = document.querySelector('.results');
 settings.addEventListener('submit', process);
+fluffyPreset.addEventListener('click', loadFluffyStrategy);
 /**
  * Handle the submit and process all input data.
  *
@@ -108,6 +110,12 @@ function sellAmount(coin_balance, sell_factor) {
  */
 function updateTotal(total, sell_amount, coin_price) {
     return total + (sell_amount * coin_price);
+}
+function loadFluffyStrategy(e) {
+    e.preventDefault();
+    document.getElementsByName('sell_percent').item(0).value = "5";
+    document.getElementsByName('sell_trigger_factor').item(0).value = "2";
+    window.scrollTo(0, 0);
 }
 // Fiat currency formatter.
 var fiat = new Intl.NumberFormat('en-US', {
