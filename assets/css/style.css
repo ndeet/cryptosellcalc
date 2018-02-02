@@ -24,6 +24,9 @@ input, button, fieldset {
     margin: 0;
     padding: 1rem;
 }
+.results-wrapper {
+    overflow-x: auto;
+}
 
 .results {
    font-family: "Lucida Console", Monaco, monospace;
@@ -32,4 +35,3 @@ input, button, fieldset {
 .donation-addresses {
     word-wrap: break-word;
 }
-
