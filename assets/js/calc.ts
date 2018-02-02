@@ -172,9 +172,9 @@ function loadFluffyStrategy(e: Event) {
  * Check if there is a preset appended to the url as a query parameter, prefill settings form and trigger calculation.
  *
  * Format: ?FUNDS-PRICE-PERCENT_SELL-FACTOR-RESULTS
- * Example: https://domain.tld/?5:12000:10:1.5:15
+ * Example: https://domain.tld/?5-12000-10-1.5-15
  *
- * This results in the following preset sett
+ * This results in the following preset:
  * Crypto funds at start: 5
  * Price at first sell: 12000
  * % of funds to sell: 10
@@ -189,7 +189,7 @@ function runSettingsFromUrl(): void {
         return;
     }
 
-    const values = urlParts[1].split(':').map(Number);
+    const values = urlParts[1].split('-').map(Number);
 
     // Only continue if the query contained all 5 segments.
     if (values.length !== 5) {

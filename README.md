@@ -2,14 +2,26 @@
 
 Calculate your future wealth without ever selling all of your funds. 
 
-## Getting Started
+## Getting Started / Usage
 
-Visit [cryptosellcalc.com](https://cryptosellcalc.com) or clone this repo and open index.html in your browser. No nodeJS dependency hell, just plain Typescript compiled to EcmaScript 5. 
+Visit [cryptosellcalc.com](https://cryptosellcalc.com)
 
+### Load custom settings by url
+You can preset the settings of your choice and share the link or bookmark it.
+
+Example:
+[https://cryptosellcalc.com/?1-10000-10-1.33-15](https://cryptosellcalc.com/?1-10000-10-1.33-15)
+
+Delimiter: `-`
+* Crypto funds at start: 1
+* Price at first sell: 10000
+* % of funds to sell: 10
+* Factor to trigger a sell: 1.33 (equals each 33% gain)
+* Number of sells/results to print: 15
 
 ### Installing
 
-If you want to run the calculator locally. Just clone or download the repository and double click on index.html
+If you want to run the calculator locally. Just clone or download the repository and double click on index.html.
 
 ## Authors
 

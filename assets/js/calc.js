@@ -75,7 +75,7 @@ function runSettingsFromUrl() {
     if (urlParts[1] === undefined || urlParts[1] === '') {
         return;
     }
-    var values = urlParts[1].split(':').map(Number);
+    var values = urlParts[1].split('-').map(Number);
     if (values.length !== 5) {
         return;
     }
