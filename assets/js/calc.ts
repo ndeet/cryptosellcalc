@@ -1,10 +1,21 @@
 "use strict";
 
+document.addEventListener("DOMContentLoaded", theDomHasLoaded, false);
+
 const settings = document.querySelector('.settings');
 const fluffyPreset = document.getElementById('fluffy-preset');
 const results = document.querySelector('.results');
 settings.addEventListener('submit', process);
 fluffyPreset.addEventListener('click', loadFluffyStrategy);
+
+/**
+ * Ensures the whole JS is loaded before it is executed.
+ *
+ * @param {Event} e
+ */
+function theDomHasLoaded(e: Event) {
+    runSettingsFromUrl();
+}
 
 /**
  * Handle the submit and process all input data.
@@ -19,6 +30,12 @@ function process(e: Event) {
     const sell_trigger_factor = parseFloat((<HTMLInputElement>document.getElementsByName('sell_trigger_factor').item(0)).value);
     let coin_price = parseFloat((<HTMLInputElement>document.getElementsByName('coin_price').item(0)).value);
     const number_sells = parseInt((<HTMLInputElement>document.getElementsByName('number_sells').item(0)).value);
+
+    // Abort if number_sells is greater 500 to avoid DOSing user browser resources and it makes barely sense anyway.
+    if (number_sells > 500) {
+        alert("It barely makes sense to run more than 500 calculations. Script stopped to not needlesly drain your device ressources. Please reduce the value for 'Number of sells/results to print'");
+        return;
+    }
 
     let sell_amount = 0.0;
     let earnings = 0.0;
@@ -151,6 +168,56 @@ function loadFluffyStrategy(e: Event) {
     window.scrollTo(0,0);
 }
 
+/**
+ * Check if there is a preset appended to the url as a query parameter, prefill settings form and trigger calculation.
+ *
+ * Format: ?FUNDS-PRICE-PERCENT_SELL-FACTOR-RESULTS
+ * Example: https://domain.tld/?5:12000:10:1.5:15
+ *
+ * This results in the following preset sett
+ * Crypto funds at start: 5
+ * Price at first sell: 12000
+ * % of funds to sell: 10
+ * Factor to trigger a sell: 1.5
+ * Number of sells/results to print: 15
+ */
+function runSettingsFromUrl(): void {
+    const url = window.location.href;
+    const urlParts = url.split("?");
+    // If we have no query params we about and return.
+    if (urlParts[1] === undefined || urlParts[1] === '') {
+        return;
+    }
+
+    const values = urlParts[1].split(':').map(Number);
+
+    // Only continue if the query contained all 5 segments.
+    if (values.length !== 5) {
+        return;
+    }
+
+    if (updateSettings(values)) {
+        // Calculate results right away.
+        document.getElementById("calculateResultsButton").click();
+    }
+}
+
+/**
+ * Updates the DOM settings form with new values.
+ *
+ * @param {Array<number>} settings
+ * @returns {boolean}
+ */
+function updateSettings(settings: Array<number>): boolean {
+    (<HTMLInputElement>document.getElementsByName('balance').item(0)).value = settings[0].toString();
+    (<HTMLInputElement>document.getElementsByName('coin_price').item(0)).value = settings[1].toString();
+    (<HTMLInputElement>document.getElementsByName('sell_percent').item(0)).value = settings[2].toString();
+    (<HTMLInputElement>document.getElementsByName('sell_trigger_factor').item(0)).value = settings[3].toString();
+    (<HTMLInputElement>document.getElementsByName('number_sells').item(0)).value = settings[4].toString();
+
+    return true;
+}
+
 // Fiat currency formatter.
 const fiat = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -172,3 +239,4 @@ const crypto_full = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 0,
     maximumFractionDigits: 8
 });
+

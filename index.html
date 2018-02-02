@@ -24,7 +24,7 @@
 
 <main class="container-fluid">
 
-    <form class="settings col-12 col-md-7 col-xl-5">
+    <form class="settings col-12 col-md-7 col-xl-5" name="settingsForm" id="settingsForm">
         <fieldset>
             <legend>Settings</legend>
 
@@ -75,7 +75,7 @@
 
             <div class="row mar-t-md">
                 <div class="col-12 col-sm-6">
-                    <input type="submit" value="Calculate results" class="button">
+                    <input type="submit" value="Calculate results" id="calculateResultsButton" class="button">
                 </div>
             </div>
 
@@ -138,6 +138,6 @@
 
     </footer>
 </main>
-<script async src="./assets/js/calc.js"></script>
+<script defer src="./assets/js/calc.js"></script>
 </body>
 </html>

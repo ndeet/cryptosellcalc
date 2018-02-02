@@ -1,9 +1,13 @@
 "use strict";
+document.addEventListener("DOMContentLoaded", theDomHasLoaded, false);
 var settings = document.querySelector('.settings');
 var fluffyPreset = document.getElementById('fluffy-preset');
 var results = document.querySelector('.results');
 settings.addEventListener('submit', process);
 fluffyPreset.addEventListener('click', loadFluffyStrategy);
+function theDomHasLoaded(e) {
+    runSettingsFromUrl();
+}
 function process(e) {
     e.preventDefault();
     var balance = parseFloat(document.getElementsByName('balance').item(0).value);
@@ -11,6 +15,10 @@ function process(e) {
     var sell_trigger_factor = parseFloat(document.getElementsByName('sell_trigger_factor').item(0).value);
     var coin_price = parseFloat(document.getElementsByName('coin_price').item(0).value);
     var number_sells = parseInt(document.getElementsByName('number_sells').item(0).value);
+    if (number_sells > 500) {
+        alert("It barely makes sense to run more than 500 calculations. Script stopped to not needlesly drain your device ressources. Please reduce the value for 'Number of sells/results to print'");
+        return;
+    }
     var sell_amount = 0.0;
     var earnings = 0.0;
     var total_sum = 0.0;
@@ -60,6 +68,28 @@ function loadFluffyStrategy(e) {
     document.getElementsByName('sell_percent').item(0).value = "5";
     document.getElementsByName('sell_trigger_factor').item(0).value = "2";
     window.scrollTo(0, 0);
+}
+function runSettingsFromUrl() {
+    var url = window.location.href;
+    var urlParts = url.split("?");
+    if (urlParts[1] === undefined || urlParts[1] === '') {
+        return;
+    }
+    var values = urlParts[1].split(':').map(Number);
+    if (values.length !== 5) {
+        return;
+    }
+    if (updateSettings(values)) {
+        document.getElementById("calculateResultsButton").click();
+    }
+}
+function updateSettings(settings) {
+    document.getElementsByName('balance').item(0).value = settings[0].toString();
+    document.getElementsByName('coin_price').item(0).value = settings[1].toString();
+    document.getElementsByName('sell_percent').item(0).value = settings[2].toString();
+    document.getElementsByName('sell_trigger_factor').item(0).value = settings[3].toString();
+    document.getElementsByName('number_sells').item(0).value = settings[4].toString();
+    return true;
 }
 var fiat = new Intl.NumberFormat('en-US', {
     style: 'currency',
