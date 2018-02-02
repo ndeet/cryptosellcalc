@@ -28,6 +28,10 @@ input, button, fieldset {
     overflow-x: auto;
 }
 
+.results-list {
+    max-width: 100%;
+}
+
 .results {
    font-family: "Lucida Console", Monaco, monospace;
 }
