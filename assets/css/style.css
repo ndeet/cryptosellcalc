@@ -39,3 +39,51 @@ input, button, fieldset {
 .donation-addresses {
     word-wrap: break-word;
 }
+
+.show-on-print {
+    visibility: hidden;
+    height: 0;
+}
+
+/* Print overrides to save space on paper. */
+@media print {
+    .show-on-print {
+        visibility: visible;
+        height: auto;
+    }
+
+    header .text-secondary,
+    h2,
+    footer,
+    #calculateResultsButton,
+    button.print,
+    hr,
+    legend {
+        display: none;
+    }
+
+    body {
+        border-top: 0;
+    }
+
+    form,
+    input .input-sm,
+    .infobox {
+        font-size: 70%;
+    }
+
+    form .row {
+        padding: 2px;
+        margin-top: 2px!important;
+        margin-bottom: 2px;
+    }
+
+    form .row .col-12 {
+        flex: 0 0 49%;
+    }
+
+    form fieldset {
+        padding: 0;
+        border-width: 0;
+    }
+}
