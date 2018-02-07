@@ -22,20 +22,23 @@ function process(e) {
     var sell_amount = 0.0;
     var earnings = 0.0;
     var total_sum = 0.0;
+    var updated_balance = balance;
+    var updated_coin_price = coin_price;
     clearResults();
     for (var i = 1; i <= number_sells; i++) {
-        sell_amount = sellAmount(balance, sell_percent);
-        earnings = sell_amount * coin_price;
-        total_sum = updateTotal(total_sum, sell_amount, coin_price);
-        balance = balance - sell_amount;
+        sell_amount = sellAmount(updated_balance, sell_percent);
+        earnings = sell_amount * updated_coin_price;
+        total_sum = updateTotal(total_sum, sell_amount, updated_coin_price);
+        updated_balance = updated_balance - sell_amount;
         if (i > 1) {
-            coin_price = coin_price * sell_trigger_factor;
+            updated_coin_price = updated_coin_price * sell_trigger_factor;
         }
-        insertResultsRow(sell_amount, coin_price, earnings, total_sum, balance);
+        insertResultsRow(sell_amount, updated_coin_price, earnings, total_sum, updated_balance);
     }
     updateResultTotal(total_sum);
-    updateFundsLeft(balance);
-    updateRemainingEarnings(balance, coin_price);
+    updateFundsLeft(updated_balance);
+    updateRemainingEarnings(updated_balance, updated_coin_price);
+    updateBrowserUrl(balance, sell_percent, sell_trigger_factor, coin_price, number_sells);
 }
 function clearResults() {
     results.innerHTML = '';
@@ -71,7 +74,13 @@ function loadFluffyStrategy(e) {
 }
 function runSettingsFromUrl() {
     var url = window.location.href;
-    var urlParts = url.split("?");
+    var urlParts;
+    if (url.includes("?s=")) {
+        urlParts = url.split("?s=");
+    }
+    else if (url.includes("?")) {
+        urlParts = url.split("?");
+    }
     if (urlParts[1] === undefined || urlParts[1] === '') {
         return;
     }
@@ -90,6 +99,10 @@ function updateSettings(settings) {
     document.getElementsByName('sell_trigger_factor').item(0).value = settings[3].toString();
     document.getElementsByName('number_sells').item(0).value = settings[4].toString();
     return true;
+}
+function updateBrowserUrl(balance, sell_percent, sell_trigger_factor, coin_price, number_sells) {
+    var path = "?s=" + balance + "-" + coin_price + "-" + sell_percent + "-" + sell_trigger_factor + "-" + number_sells;
+    history.pushState(null, '', path);
 }
 var fiat = new Intl.NumberFormat('en-US', {
     style: 'currency',

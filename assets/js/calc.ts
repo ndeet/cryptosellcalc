@@ -25,10 +25,10 @@ function theDomHasLoaded(e: Event) {
 function process(e: Event) {
     e.preventDefault();
 
-    let balance = parseFloat((<HTMLInputElement>document.getElementsByName('balance').item(0)).value);
+    const balance = parseFloat((<HTMLInputElement>document.getElementsByName('balance').item(0)).value);
     const sell_percent = parseFloat((<HTMLInputElement>document.getElementsByName('sell_percent').item(0)).value);
     const sell_trigger_factor = parseFloat((<HTMLInputElement>document.getElementsByName('sell_trigger_factor').item(0)).value);
-    let coin_price = parseFloat((<HTMLInputElement>document.getElementsByName('coin_price').item(0)).value);
+    const coin_price = parseFloat((<HTMLInputElement>document.getElementsByName('coin_price').item(0)).value);
     const number_sells = parseInt((<HTMLInputElement>document.getElementsByName('number_sells').item(0)).value);
 
     // Abort if number_sells is greater 500 to avoid DOSing user browser resources and it makes barely sense anyway.
@@ -40,30 +40,33 @@ function process(e: Event) {
     let sell_amount = 0.0;
     let earnings = 0.0;
     let total_sum = 0.0;
+    let updated_balance = balance;
+    let updated_coin_price = coin_price;
 
     // Clear results from any previous run.
     clearResults();
 
     // Calculate results.
     for (let i = 1; i <= number_sells; i++) {
-        sell_amount = sellAmount(balance, sell_percent);
-        earnings = sell_amount * coin_price;
-        total_sum = updateTotal(total_sum, sell_amount, coin_price);
+        sell_amount = sellAmount(updated_balance, sell_percent);
+        earnings = sell_amount * updated_coin_price;
+        total_sum = updateTotal(total_sum, sell_amount, updated_coin_price);
         // Update balance.
-        balance = balance - sell_amount;
+        updated_balance = updated_balance - sell_amount;
         // Update coin price (only after first run)
         if (i > 1) {
-            coin_price = coin_price * sell_trigger_factor;
+            updated_coin_price = updated_coin_price * sell_trigger_factor;
         }
 
         // Insert into DOM.
-        insertResultsRow(sell_amount, coin_price, earnings, total_sum, balance);
+        insertResultsRow(sell_amount, updated_coin_price, earnings, total_sum, updated_balance);
     }
 
     // Update total sum and funds remaining.
     updateResultTotal(total_sum);
-    updateFundsLeft(balance);
-    updateRemainingEarnings(balance, coin_price);
+    updateFundsLeft(updated_balance);
+    updateRemainingEarnings(updated_balance, updated_coin_price);
+    updateBrowserUrl(balance, sell_percent, sell_trigger_factor, coin_price, number_sells);
 }
 
 /**
@@ -183,7 +186,16 @@ function loadFluffyStrategy(e: Event) {
  */
 function runSettingsFromUrl(): void {
     const url = window.location.href;
-    const urlParts = url.split("?");
+    let urlParts;
+
+    // Search for query parameter and support old/short style too (broken on mobile devices).
+    if (url.includes("?s=")) {
+        urlParts = url.split("?s=");
+    }
+    else if (url.includes("?")) { // broken on mobile.
+        urlParts = url.split("?");
+    }
+
     // If we have no query params we about and return.
     if (urlParts[1] === undefined || urlParts[1] === '') {
         return;
@@ -216,6 +228,20 @@ function updateSettings(settings: Array<number>): boolean {
     (<HTMLInputElement>document.getElementsByName('number_sells').item(0)).value = settings[4].toString();
 
     return true;
+}
+
+/**
+ * Update browser url after calculation for easier bookmarking.
+ *
+ * @param {number} balance
+ * @param {number} sell_percent
+ * @param {number} sell_trigger_factor
+ * @param {number} coin_price
+ * @param {number} number_sells
+ */
+function updateBrowserUrl(balance: number, sell_percent: number, sell_trigger_factor: number, coin_price: number, number_sells: number) {
+    const path = `?s=${balance}-${coin_price}-${sell_percent}-${sell_trigger_factor}-${number_sells}`;
+    history.pushState(null, '', path);
 }
 
 // Fiat currency formatter.
