@@ -53,13 +53,12 @@ function process(e: Event) {
         total_sum = updateTotal(total_sum, sell_amount, updated_coin_price);
         // Update balance.
         updated_balance = updated_balance - sell_amount;
-        // Update coin price (only after first run)
-        if (i > 1) {
-            updated_coin_price = updated_coin_price * sell_trigger_factor;
-        }
 
         // Insert into DOM.
         insertResultsRow(sell_amount, updated_coin_price, earnings, total_sum, updated_balance);
+
+        // Update coin price (do it after DOM insert to have the correct value on next iteration)
+        updated_coin_price = updated_coin_price * sell_trigger_factor;
     }
 
     // Update total sum and funds remaining.
