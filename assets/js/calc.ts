@@ -58,7 +58,9 @@ function process(e: Event) {
         insertResultsRow(sell_amount, updated_coin_price, earnings, total_sum, updated_balance);
 
         // Update coin price (do it after DOM insert to have the correct value on next iteration)
-        updated_coin_price = updated_coin_price * sell_trigger_factor;
+        if (i !== number_sells) {
+            updated_coin_price = updated_coin_price * sell_trigger_factor;
+        }
     }
 
     // Update total sum and funds remaining.

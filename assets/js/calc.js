@@ -31,7 +31,9 @@ function process(e) {
         total_sum = updateTotal(total_sum, sell_amount, updated_coin_price);
         updated_balance = updated_balance - sell_amount;
         insertResultsRow(sell_amount, updated_coin_price, earnings, total_sum, updated_balance);
-        updated_coin_price = updated_coin_price * sell_trigger_factor;
+        if (i !== number_sells) {
+            updated_coin_price = updated_coin_price * sell_trigger_factor;
+        }
     }
     updateResultTotal(total_sum);
     updateFundsLeft(updated_balance);
